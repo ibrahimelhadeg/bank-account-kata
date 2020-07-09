@@ -2,7 +2,6 @@ package com.soge.katas.accounts;
 
 import java.math.BigDecimal;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +12,7 @@ import com.soge.katas.accounts.exceptions.NonSufficientFundsException;
 import com.soge.katas.accounts.transactions.Transaction;
 import com.soge.katas.accounts.transactions.Transactions;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -39,14 +39,14 @@ public class AccountShould {
 
     @Test
     public void init_a_transaction_with_a_negative_amount_for_a_deposit() {
-        Assertions.assertThrows(
+        assertThrows(
                 IllegalArgumentException.class,
                 () -> account.deposit(BigDecimal.valueOf(-100L)));
     }
 
     @Test
     public void init_a_transaction_with_a_null_amount_for_a_deposit() {
-        Assertions.assertThrows(
+        assertThrows(
                 IllegalArgumentException.class,
                 () -> account.deposit(BigDecimal.ZERO));
     }
@@ -70,21 +70,21 @@ public class AccountShould {
     @Test
     public void init_a_transaction_with_a_positive_amount_greater_than_the_balance_for_a_withdraw() {
         when(transactions.lastBalance()).thenReturn(openingAmount);
-        Assertions.assertThrows(
+        assertThrows(
                 NonSufficientFundsException.class,
                 () -> account.withdraw(openingAmount.add(BigDecimal.TEN)));
     }
 
     @Test
     public void init_a_transaction_with_a_negative_amount_for_a_withdraw() {
-        Assertions.assertThrows(
+        assertThrows(
                 IllegalArgumentException.class,
                 () -> account.withdraw(BigDecimal.valueOf(-100L)));
     }
 
     @Test
     public void init_a_transaction_with_a_null_amount_for_a_withdraw() {
-        Assertions.assertThrows(
+        assertThrows(
                 IllegalArgumentException.class,
                 () -> account.withdraw(BigDecimal.ZERO));
     }

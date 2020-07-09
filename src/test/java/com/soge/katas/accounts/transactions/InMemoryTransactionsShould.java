@@ -1,17 +1,17 @@
-package com.soge.katas.accounts;
+package com.soge.katas.accounts.transactions;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.soge.katas.accounts.transactions.InMemoryTransactions;
-import com.soge.katas.accounts.transactions.Transaction;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(MockitoExtension.class)
 public class InMemoryTransactionsShould {
 
     private InMemoryTransactions transactions;
