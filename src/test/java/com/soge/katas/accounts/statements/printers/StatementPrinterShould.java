@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.soge.katas.accounts.statements.Statement;
+import com.soge.katas.accounts.statements.StatementGenerator;
 import com.soge.katas.accounts.transactions.Transaction;
 
 import static org.mockito.Mockito.inOrder;
@@ -38,7 +39,7 @@ public class StatementPrinterShould {
                 Transaction.Type.WITHDRAWAL, transactionTwoTime, transactionTwoAmount, transactionTwoBalance);
         transactions.add(transactionTwo);
 
-        Statement statement = new Statement(transactions);
+        Statement statement = new StatementGenerator().generateStatementFor(transactions);
         InOrder inOrder = inOrder(console);
 
         StatementPrinter statementPrinter = new ConsoleStatementPrinter(console, new LineFormatter());
