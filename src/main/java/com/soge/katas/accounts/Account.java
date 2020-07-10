@@ -16,7 +16,10 @@ public class Account {
             throw new IllegalArgumentException("Cannot create account with negative balance");
         }
         this.transactions = transactions;
-        this.recordTransactionOf(openingAmount, openingAmount);
+        this.recordTransactionOf(
+                Transaction.Type.DEPOSIT,
+                openingAmount,
+                openingAmount);
     }
 
     public void deposit(final BigDecimal howMuch) {
@@ -25,6 +28,7 @@ public class Account {
         }
         BigDecimal previousBalance = transactions.lastBalance();
         recordTransactionOf(
+                Transaction.Type.DEPOSIT,
                 howMuch,
                 previousBalance.add(howMuch));
     }
@@ -38,12 +42,13 @@ public class Account {
             throw new NonSufficientFundsException("Insufficient funds");
         }
         recordTransactionOf(
+                Transaction.Type.WITHDRAWAL,
                 howMuch.multiply(BigDecimal.valueOf(-1L)),
                 previousBalance.subtract(howMuch));
     }
 
-    private void recordTransactionOf(BigDecimal howMuch, BigDecimal balance) {
-        Transaction transaction = new Transaction(LocalDateTime.now(), howMuch, balance);
+    private void recordTransactionOf(Transaction.Type type, BigDecimal howMuch, BigDecimal balance) {
+        Transaction transaction = new Transaction(type, LocalDateTime.now(), howMuch, balance);
         transactions.add(transaction);
     }
 }
